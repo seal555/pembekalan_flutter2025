@@ -179,6 +179,7 @@ class LoginScreenState extends State<LoginScreen> {
     Navigator.of(_context).pushReplacement(MaterialPageRoute(builder: (_){
       return DashboardScreen();
     }));
+    
   }
 
   showAlert(BuildContext _context, String _title, String _message) {
