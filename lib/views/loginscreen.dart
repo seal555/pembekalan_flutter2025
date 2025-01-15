@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pembekalan_flutter/customs/custom_alertdialog.dart';
 import 'package:pembekalan_flutter/utilities/sharedpreferences.dart';
 import 'package:pembekalan_flutter/views/dashboardscreen.dart';
@@ -17,6 +18,11 @@ class LoginScreenState extends State<LoginScreen> {
   final TextEditingController _controllerUsername = new TextEditingController();
   final TextEditingController _controllerPassword = new TextEditingController();
 
+  // fungsi check isRememberMe
+
+
+
+
   @override
   Widget build(BuildContext context) {
     // mengetahui ukuran layar (width & height)
@@ -26,9 +32,19 @@ class LoginScreenState extends State<LoginScreen> {
     return Container(
       color: Colors.grey,
       child: Scaffold(
+        //resizeToAvoidBottomInset: false,
         body: GestureDetector(
+          behavior: HitTestBehavior.opaque,
           onTap: () {
-            FocusScope.of(context).unfocus();
+            /*
+              tambahkan behavior: HitTestBehavior.opaque,
+              kemudian gunakan FocusScope.of(context).unfocus();
+              rekomendasi dari ChatGPT
+            */
+            FocusScope.of(context).unfocus(); //<Flutter 2
+            // FocusManager.instance.primaryFocus?.unfocus(); //>= Flutter 2
+            // FocusScope.of(context).requestFocus(FocusNode());
+            // SystemChannels.textInput.invokeMethod('TextInput.hide');
           },
           child: Container(
             width: size.width,
