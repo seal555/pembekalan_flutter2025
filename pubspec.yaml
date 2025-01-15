@@ -1,0 +1,33 @@
+name: pembekalan_flutter
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: ^3.5.4
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  #plugin untuk save data sederhana (key-value)
+  shared_preferences: ^2.3.5
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+
+  #untuk mendaftarkan berbagai asset image yang akan digunakan
+  assets:
+  - assets/images/logo_xa.png
+
+  #untuk mendaftarkan custom font yang akan digunakan
+  fonts:
+    - family: BiomeRegular
+      fonts:
+        - asset: assets/fonts/biome_regular.ttf
