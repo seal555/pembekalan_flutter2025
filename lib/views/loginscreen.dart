@@ -27,7 +27,9 @@ class LoginScreenState extends State<LoginScreen> {
       color: Colors.grey,
       child: Scaffold(
         body: GestureDetector(
-          onTap: () {},
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
           child: Container(
             width: size.width,
             child: Center(
@@ -179,7 +181,7 @@ class LoginScreenState extends State<LoginScreen> {
     Navigator.of(_context).pushReplacement(MaterialPageRoute(builder: (_){
       return DashboardScreen();
     }));
-    
+
   }
 
   showAlert(BuildContext _context, String _title, String _message) {
