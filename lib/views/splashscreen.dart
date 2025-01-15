@@ -71,14 +71,15 @@ class SplashScreenState extends State<SplashScreen> {
     // proses berikutnya
     // cek login?
     SharedPreferencesHelper.readIsLogin().then((isLogin) {
-      if (isLogin) {
-        // sudah login
-        // pindah ke dashboardscreen
-        pindahKeDashboardScreen();
-      } else {
-        //pindah ke loginscreen
-        pindahKeLoginScreen();
-      }
+      // if (isLogin) {
+      //   // sudah login
+      //   // pindah ke dashboardscreen
+      //   pindahKeDashboardScreen();
+      // } else {
+      //   //pindah ke loginscreen
+      //   pindahKeLoginScreen();
+      // }
+      pindahKeLoginScreen();
     });
   }
 

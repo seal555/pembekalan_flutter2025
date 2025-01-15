@@ -13,6 +13,10 @@ dependencies:
   #plugin untuk save data sederhana (key-value)
   shared_preferences: ^2.3.5
 
+  #untuk date time formatter
+  #https://pub.dev/packages/intl
+  intl: ^0.20.1
+
 
 dev_dependencies:
   flutter_test:
