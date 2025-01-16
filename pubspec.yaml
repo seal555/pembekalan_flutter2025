@@ -17,6 +17,14 @@ dependencies:
   #https://pub.dev/packages/intl
   intl: ^0.20.1
 
+  #untuk http connection
+  #https://pub.dev/packages/http
+  http: ^1.2.2
+
+  #untuk loading
+  #https://pub.dev/packages/progress_dialog_null_safe
+  progress_dialog_null_safe: ^3.0.0
+
 
 dev_dependencies:
   flutter_test:
