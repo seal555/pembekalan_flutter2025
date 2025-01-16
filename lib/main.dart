@@ -5,6 +5,7 @@ import 'package:pembekalan_flutter/views/dashboardscreen.dart';
 import 'package:pembekalan_flutter/views/loginscreen.dart';
 import 'package:pembekalan_flutter/views/registerscreen.dart';
 import 'package:pembekalan_flutter/views/splashscreen.dart';
+import 'package:pembekalan_flutter/views/submenu/parsingdatascreen.dart';
 
 void main() {
   runApp(const MainApp());
@@ -27,6 +28,7 @@ class MainApp extends StatelessWidget {
         Routes.loginscreen: (context) => LoginScreen(),
         Routes.registerscreen: (context) => RegisterScreen(),
         Routes.dashboardscreen: (context) => DashboardScreen(),
+        Routes.parsingdatascreen: (context) => ParsingDataScreen(),
         
       },
     );

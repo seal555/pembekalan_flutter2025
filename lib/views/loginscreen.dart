@@ -19,9 +19,34 @@ class LoginScreenState extends State<LoginScreen> {
   final TextEditingController _controllerPassword = new TextEditingController();
 
   // fungsi check isRememberMe
+  @override
+  void initState() {
+    super.initState();
 
+    // periksa flag IsRememberMe
+    SharedPreferencesHelper.readIsRemember().then((value) {
+      if (value) {
+        // auto fill utk username & password
+        SharedPreferencesHelper.readUsername().then((usr) {
+          setState(() {
+            _controllerUsername.text = usr;
+            username = usr;
+          });
+        });
+        SharedPreferencesHelper.readPassword().then((pwd) {
+          setState(() {
+            _controllerPassword.text = pwd;
+            password = pwd;
+          });
+        });
 
-
+        // centang IsRememberMe jika diperlukan
+        setState(() {
+          isRememberMe = true;
+        });
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -124,7 +149,7 @@ class LoginScreenState extends State<LoginScreen> {
                     child: Text('Login Now!'),
                     style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all(Colors.black12),
+                            MaterialStateProperty.all(Colors.black12), //WidgetStateProperty.all(Colors.redAccent)) -> gunakan ini saja
                         overlayColor: MaterialStateProperty.resolveWith<Color>(
                             (Set<MaterialState> states) {
                           if (states.contains(MaterialState.focused)) {
@@ -194,10 +219,9 @@ class LoginScreenState extends State<LoginScreen> {
     SharedPreferencesHelper.saveIsLogin(true);
 
     // ke DashboardScreen
-    Navigator.of(_context).pushReplacement(MaterialPageRoute(builder: (_){
+    Navigator.of(_context).pushReplacement(MaterialPageRoute(builder: (_) {
       return DashboardScreen();
     }));
-
   }
 
   showAlert(BuildContext _context, String _title, String _message) {
