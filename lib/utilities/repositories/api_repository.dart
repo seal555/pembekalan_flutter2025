@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:pembekalan_flutter/utilities/networking/networking_response.dart';
 
 import '../appconfiguration.dart';
@@ -22,4 +24,16 @@ class APIRepository {
   }
 
   // 2. Login User
+  Future<NetworkingResponse> loginUser(String email, String password) {
+    String url = API_BASE_URL + END_POINT_LOGIN_USER;
+
+    Map<String, String> headerRequest = {
+      'X-Requested-With': 'XMLHttpRequest',
+      'Content-Type': 'application/json'
+    };
+
+    final bodyRequest = jsonEncode({"email": email, "password": password});
+
+    return NetworkingConnector().postRequest(url, headerRequest, bodyRequest);
+  }
 }

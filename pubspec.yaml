@@ -24,6 +24,7 @@ dependencies:
   #untuk loading
   #https://pub.dev/packages/progress_dialog_null_safe
   progress_dialog_null_safe: ^3.0.0
+  simple_fontellico_progress_dialog: ^0.3.0
 
 
 dev_dependencies:

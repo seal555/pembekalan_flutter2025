@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pembekalan_flutter/customs/custom_alertdialog.dart';
 import 'package:pembekalan_flutter/utilities/sharedpreferences.dart';
+import 'package:pembekalan_flutter/viewmodels/login_user_viewmodel.dart';
 import 'package:pembekalan_flutter/views/dashboardscreen.dart';
 import 'package:pembekalan_flutter/views/registerscreen.dart';
+import 'package:progress_dialog_null_safe/progress_dialog_null_safe.dart';
+import 'package:simple_fontellico_progress_dialog/simple_fontico_loading.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -17,6 +20,9 @@ class LoginScreenState extends State<LoginScreen> {
 
   final TextEditingController _controllerUsername = new TextEditingController();
   final TextEditingController _controllerPassword = new TextEditingController();
+
+  ProgressDialog? loading;
+  SimpleFontelicoProgressDialog? loading2;
 
   // fungsi check isRememberMe
   @override
@@ -52,6 +58,18 @@ class LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     // mengetahui ukuran layar (width & height)
     Size size = MediaQuery.of(context).size;
+
+    //init loading
+    loading = ProgressDialog(context,
+        type: ProgressDialogType.normal, isDismissible: false, showLogs: true);
+    loading!.style(
+        message: 'Login, silahkan tunggu...',
+        progressWidget: CircularProgressIndicator(),
+        borderRadius: 10,
+        elevation: 10,
+        insetAnimCurve: Curves.easeInOut);
+
+    loading2 = SimpleFontelicoProgressDialog(context: context);
 
     // TODO: implement build
     return Container(
@@ -148,8 +166,8 @@ class LoginScreenState extends State<LoginScreen> {
                     },
                     child: Text('Login Now!'),
                     style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.black12), //WidgetStateProperty.all(Colors.redAccent)) -> gunakan ini saja
+                        backgroundColor: MaterialStateProperty.all(Colors
+                            .black12), //WidgetStateProperty.all(Colors.redAccent)) -> gunakan ini saja
                         overlayColor: MaterialStateProperty.resolveWith<Color>(
                             (Set<MaterialState> states) {
                           if (states.contains(MaterialState.focused)) {
@@ -202,14 +220,50 @@ class LoginScreenState extends State<LoginScreen> {
       showAlert(context, 'Warning!', 'Anda belum mengisi password!');
     } else {
       //sudah valid
+      /*
       //simpan data secara offline (belum connect API)
       saveDataOffline(context, _controllerUsername.value.text,
+          _controllerPassword.value.text, isRememberMe);*/
+
+      // menggunakan API
+      loginUser(context, _controllerUsername.value.text,
           _controllerPassword.value.text, isRememberMe);
     }
   }
 
+  Future loginUser(BuildContext _context, String email, String password,
+      bool isRememberMe) async {
+    //username = eve.holt@reqres.in
+    //password = cityslicka
+
+    // tampilkan loading
+    //await loading!.show();
+    loading2!.show(
+        message: 'Memproses login....',
+        type: SimpleFontelicoProgressDialogType.hurricane);
+
+    LoginUserViewmodel().postDataToAPI(_context, email, password).then((value) {
+      // tutup loading
+      //if(loading!.isShowing()) loading!.hide();
+      //loading2!.hide();
+      /*
+      jika di hide maka jadi blocker, loading tidak hilang
+      jika tidak di hide, maka otomatis loading hilang sendiri dan proses lanjut
+      */
+
+      setState(() {
+        if (value != null) {
+          // ambil token
+          String token = value.token;
+
+          saveDataOffline(_context, email, password, isRememberMe, token);
+        }
+      });
+    });
+  }
+
   saveDataOffline(BuildContext _context, String _username, String _password,
-      bool _isRememberMe) {
+      bool _isRememberMe, String token) {
     // cara simpan data local
     SharedPreferencesHelper.saveUsername(_username);
     SharedPreferencesHelper.savePassword(_password);
@@ -217,6 +271,9 @@ class LoginScreenState extends State<LoginScreen> {
 
     // flag login = true
     SharedPreferencesHelper.saveIsLogin(true);
+
+    // simpan token
+    SharedPreferencesHelper.saveToken(token);
 
     // ke DashboardScreen
     Navigator.of(_context).pushReplacement(MaterialPageRoute(builder: (_) {

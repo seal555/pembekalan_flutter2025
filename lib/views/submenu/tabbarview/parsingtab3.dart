@@ -69,7 +69,7 @@ class _Parsingtab3State extends State<ParsingTab3>
                       child: Card(
                         color:
                             index % 2 == 0 ? Colors.white : Colors.amberAccent,
-                        margin: EdgeInsets.fromLTRB(5, 30, 5, 30),
+                        margin: EdgeInsets.fromLTRB(5, 30, 5, 30), // dibesarkan vertical margin utk demo scroll down
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
