@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pembekalan_flutter/views/submenu/tabbarview/parsingtab1.dart';
 import 'package:pembekalan_flutter/views/submenu/tabbarview/parsingtab2.dart';
+import 'package:pembekalan_flutter/views/submenu/tabbarview/parsingtab3.dart';
 
 // shortcut auto create ketik stfu, pilih paling atas
 
@@ -48,7 +49,7 @@ class _ParsingDataScreenState extends State<ParsingDataScreen> {
                 indicatorColor: Colors.white,
               ),
             ),
-            body: TabBarView(children: [ParsingTab1(), ParsingTab2()]),
+            body: TabBarView(children: [ParsingTab1(), ParsingTab2(), ParsingTab3()]),
           )),
     );
   }
