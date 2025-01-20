@@ -3,6 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:pembekalan_flutter/customs/custom_snackbar.dart';
+import 'package:pembekalan_flutter/models/info_mahasiswa_model.dart';
+import 'package:pembekalan_flutter/viewmodels/info_mahasiswa_viewmodel.dart';
 
 class InputDataMahasiswaScreen extends StatefulWidget {
   const InputDataMahasiswaScreen({super.key});
@@ -166,7 +169,62 @@ class _InputDataMahasiswaScreenState extends State<InputDataMahasiswaScreen> {
     });
   }
 
-  void validasiInput(){
-    
+  void validasiInput() {
+    if (_namaController.text.isEmpty) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(customSnackbar('Nama Lengkap harus diisi!'));
+    }
+    else if(_tanggalLahir.isEmpty){
+      ScaffoldMessenger.of(context)
+          .showSnackBar(customSnackbar('Tanggal Lahir belum dipilih!'));
+    }
+    else if(_genderController.text.isEmpty){
+      ScaffoldMessenger.of(context)
+          .showSnackBar(customSnackbar('Gender harus diisi! (L/P)'));
+    }
+    else if(_alamatController.text.isEmpty){
+      ScaffoldMessenger.of(context)
+          .showSnackBar(customSnackbar('Alamat Lengkap harus diisi!'));
+    }
+    else if(_jurusanController.text.isEmpty){
+      ScaffoldMessenger.of(context)
+          .showSnackBar(customSnackbar('Jurusan harus diisi!'));
+    }
+    else if(_image == null && _fotoPath.isEmpty){
+      ScaffoldMessenger.of(context)
+          .showSnackBar(customSnackbar('Foto profil belum dipilih!'));
+    }
+    else{
+      // simpan ke database
+      simpanDataMahasiswa();
+    }
+  }
+
+  void simpanDataMahasiswa() async {
+    InfoMahasiswaModel model = new InfoMahasiswaModel(
+      nama: _namaController.text,
+      tanggal_lahir: _tanggalLahir,
+      gender: _genderController.text,
+      alamat: _alamatController.text,
+      jurusan: _jurusanController.text,
+      foto_path: _fotoPath
+    );
+
+    await InfoMahasiswaViewModel().insertDataMahasiswa(model).then((value){
+      print('Response Database : $value');
+      clearAllInputs();
+    });
+  }
+
+  void clearAllInputs(){
+    setState(() {
+      _namaController.text = '';
+      _tanggalLahir = '';
+      _genderController.text = '';
+      _alamatController.text = '';
+      _jurusanController.text = '';
+      _fotoPath = '';
+      _image = null;
+    });
   }
 }
