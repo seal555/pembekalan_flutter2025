@@ -249,6 +249,7 @@ class LoginScreenState extends State<LoginScreen> {
       /*
       jika di hide maka jadi blocker, loading tidak hilang
       jika tidak di hide, maka otomatis loading hilang sendiri dan proses lanjut
+      gunakan WillPopScope dan wrap si Container
       */
 
       setState(() {

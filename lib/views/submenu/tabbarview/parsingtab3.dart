@@ -21,6 +21,7 @@ class _Parsingtab3State extends State<ParsingTab3>
   ScrollController scrollController = new ScrollController();
 
   bool isLoading = false;
+  
 
   @override
   void initState() {
@@ -176,6 +177,7 @@ class _Parsingtab3State extends State<ParsingTab3>
 
   void showInfoUser(Data info){
     String message = '${info.firstName} ${info.lastName}';
+    ScaffoldMessenger.of(context).removeCurrentSnackBar(); // hilangkan snackbar lainnya
     ScaffoldMessenger.of(context).showSnackBar(customSnackbar(message));
   }
 

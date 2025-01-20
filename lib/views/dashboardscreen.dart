@@ -299,6 +299,7 @@ class DashboardScreenLayoutState extends State<StatefulWidget> {
             ),
             onTap: (){
               // pindah ke screen imaging
+              Navigator.pushNamed(context, Routes.imagingsliderscreen);
             },
           ),
         ),
@@ -322,6 +323,7 @@ class DashboardScreenLayoutState extends State<StatefulWidget> {
             ),
             onTap: (){
               // pindah ke screen camera & galery
+              Navigator.pushNamed(context, Routes.cameragaleryscreen);
             },
           ),
         ),
@@ -345,6 +347,7 @@ class DashboardScreenLayoutState extends State<StatefulWidget> {
             ),
             onTap: (){
               // pindah ke screen database
+              Navigator.pushNamed(context, Routes.listmahasiswascreen);
             },
           ),
         )
