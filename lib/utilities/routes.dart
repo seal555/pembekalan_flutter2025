@@ -9,4 +9,8 @@ class Routes{
   static const String cameragaleryscreen = '/submenu/cameragaleryscreen';
   static const String listmahasiswascreen = '/submenu/listmahasiswascreen';
   static const String inputdatamahasiswascreen = '/submenu/inputdatamahasiswascreen';
+  static const String detailmahasiswascreen = '/submenu/detail/detailmahasiswascreen';
+  static const String updatedatamahasiswascreen = '/submenu/updatedatamahasiswascreen';
+  static const String locationservicesscreen = '/submenu/locationservicesscreen';
+  static const String mapservicescreen = '/submenu/mapservicesscreen';
 }

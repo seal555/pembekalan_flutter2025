@@ -350,6 +350,54 @@ class DashboardScreenLayoutState extends State<StatefulWidget> {
               Navigator.pushNamed(context, Routes.listmahasiswascreen);
             },
           ),
+        ),
+        Card(
+          color: Colors.black38,
+          child: InkWell(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.location_pin,
+                  color: Colors.white,
+                  size: 100,
+                ),
+                Text(
+                  'Location Services',
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                )
+              ],
+            ),
+            onTap: (){
+              // pindah ke screen location services
+              Navigator.pushNamed(context, Routes.locationservicesscreen);
+            },
+          ),
+        ),
+        Card(
+          color: Colors.indigo,
+          child: InkWell(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.map,
+                  color: Colors.white,
+                  size: 100,
+                ),
+                Text(
+                  'Map Service',
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                )
+              ],
+            ),
+            onTap: (){
+              // pindah ke screen map services
+              Navigator.pushNamed(context, Routes.mapservicescreen);
+            },
+          ),
         )
       ],
     );

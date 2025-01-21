@@ -1,9 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:pembekalan_flutter/customs/custom_confirmationdialog.dart';
 import 'package:pembekalan_flutter/models/info_mahasiswa_model.dart';
 import 'package:pembekalan_flutter/utilities/routes.dart';
 import 'package:pembekalan_flutter/viewmodels/info_mahasiswa_viewmodel.dart';
+import 'package:pembekalan_flutter/views/submenu/detail/detailmahasiswascreen.dart';
+import 'package:pembekalan_flutter/views/submenu/updatedatamahasiswascreen.dart';
 
 class ListMahasiswaScreen extends StatefulWidget {
   const ListMahasiswaScreen({super.key});
@@ -59,6 +62,7 @@ class _ListMahasiswaScreenState extends State<ListMahasiswaScreen> {
                         suffixIcon: IconButton(
                             onPressed: () {
                               // jika button search di klik
+                              cariDataMahasiswa();
                             },
                             icon: Icon(Icons.search))),
                     controller: _keywordPencarian,
@@ -77,6 +81,10 @@ class _ListMahasiswaScreenState extends State<ListMahasiswaScreen> {
                           child: InkWell(
                             onTap: () {
                               // aksinya
+                              // pindah ke screen detail mahasiswa
+                              InfoMahasiswaModel dataModel =
+                                  _listMahasiswa[index];
+                              pindahKeDetailMahasiswaScreen(dataModel);
                             },
                             child: Card(
                               color: index % 2 == 0
@@ -122,13 +130,21 @@ class _ListMahasiswaScreenState extends State<ListMahasiswaScreen> {
                                             IconButton(
                                                 onPressed: () {
                                                   // edit data
+                                                  InfoMahasiswaModel dataModel =
+                                                      _listMahasiswa[index];
+                                                  pindahKeUpdateDataMahasiswaScreen(
+                                                      dataModel);
                                                 },
                                                 icon: Icon(Icons.edit)),
                                             IconButton(
                                                 onPressed: () {
                                                   // delete data
+                                                  InfoMahasiswaModel dataModel =
+                                                      _listMahasiswa[index];
+                                                  konfirmasiDelete(dataModel);
                                                 },
-                                                icon: Icon(Icons.delete_forever))
+                                                icon:
+                                                    Icon(Icons.delete_forever))
                                           ],
                                         )
                                       ],
@@ -169,6 +185,80 @@ class _ListMahasiswaScreenState extends State<ListMahasiswaScreen> {
         // tampilkan list data
         print('Jumlah record yang ditemukan = ${value.length}');
         _listMahasiswa = value;
+      });
+    });
+  }
+
+  void pindahKeDetailMahasiswaScreen(InfoMahasiswaModel dataModel) {
+    Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => DetailMahasiswaScreen(data: dataModel)))
+        .then((value) {
+      // refresh ulang tampilan list
+      tampilkanListDataMahasiswa();
+    });
+  }
+
+  void pindahKeUpdateDataMahasiswaScreen(InfoMahasiswaModel dataModel) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                UpdateDataMahasiswaScreen(data: dataModel))).then((value) {
+      setState(() {
+        // refresh ulang tampilan list
+        tampilkanListDataMahasiswa();
+      });
+    });
+  }
+
+  void cariDataMahasiswa() async {
+    // selama keyword tidak kosong
+    if (_keywordPencarian.text.isEmpty) {
+      // tampilkan ulang seluruh list
+      tampilkanListDataMahasiswa();
+    } else {
+      // cari berdasarkan keyword yg diinput
+      String keyword = _keywordPencarian.text;
+
+      await InfoMahasiswaViewModel().searchDataMahasiswa(keyword).then((value) {
+        setState(() {
+          print('Hasil Pencarian = ${value.length}');
+          //update listMahasiswa
+          _listMahasiswa = value;
+        });
+      });
+    }
+  }
+
+  void konfirmasiDelete(InfoMahasiswaModel dataModel) async {
+    var confirmationDialog = CustomConfirmationDialog(
+      title: 'Hapus Data',
+      message: 'Yakin ingin menghapus data ini?',
+      yes: 'Ya',
+      no: 'Tidak',
+      pressYes: (){
+        // jadi delete
+        hapusDataMahasiswa(dataModel);
+        Navigator.of(context).pop();
+      },
+      pressNo: (){
+        // tidak jadi delete
+        Navigator.of(context).pop();
+      },
+    );
+
+    showDialog(context: context, builder: (_) => confirmationDialog);
+  }
+
+  void hapusDataMahasiswa(InfoMahasiswaModel dataModel) async {
+    await InfoMahasiswaViewModel().deleteDataMahasiswa(dataModel).then((value){
+      setState(() {
+        print('Jumlah record yang terpengaruh = $value');
+
+        // refresh list
+        tampilkanListDataMahasiswa();
       });
     });
   }

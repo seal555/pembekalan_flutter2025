@@ -9,9 +9,28 @@ class InfoMahasiswaViewModel {
     return await DbRepository().insertDataMahasiswa(model);
   }
 
-  // read data
-  Future<List<InfoMahasiswaModel>> readDataMahasiswa() async{
+  // read all data
+  Future<List<InfoMahasiswaModel>> readDataMahasiswa() async {
     return await DbRepository().readDataMahasiswa();
   }
 
+  // update data by id
+  Future<int> updateDataMahasiswa(InfoMahasiswaModel model) async {
+    return await DbRepository().updateDataMahasiswa(model);
+  }
+
+  // read data by id
+  Future<InfoMahasiswaModel> readDataMahasiswaById(int id) async {
+    return await DbRepository().readDataMahasiswaById(id);
+  }
+
+  // search data by keyword
+  Future<List<InfoMahasiswaModel>> searchDataMahasiswa(String keyword) async {
+    return await DbRepository().searchDataMahasiswa(keyword);
+  }
+
+  // delete data
+  Future<int> deleteDataMahasiswa(InfoMahasiswaModel model) async {
+    return await DbRepository().deleteDataMahasiswa(model);
+  }
 }

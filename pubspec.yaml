@@ -47,6 +47,14 @@ dependencies:
   #https://pub.dev/packages/path
   path: ^1.9.0
 
+  #untuk handle lokasi
+  #https://pub.dev/packages/geolocator
+  geolocator: ^13.0.2
+
+  #untuk handle map dng googlemaps
+  #https://pub.dev/packages/google_maps_flutter
+  google_maps_flutter: ^2.10.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

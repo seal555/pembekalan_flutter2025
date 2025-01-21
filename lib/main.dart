@@ -7,10 +7,14 @@ import 'package:pembekalan_flutter/views/registerscreen.dart';
 import 'package:pembekalan_flutter/views/splashscreen.dart';
 import 'package:pembekalan_flutter/views/submenu/cameragaleryscreen.dart';
 import 'package:pembekalan_flutter/views/submenu/detail/detailimagescreen.dart';
+import 'package:pembekalan_flutter/views/submenu/detail/detailmahasiswascreen.dart';
 import 'package:pembekalan_flutter/views/submenu/imagingsliderscreen.dart';
 import 'package:pembekalan_flutter/views/submenu/inputdatamahasiswascreen.dart';
 import 'package:pembekalan_flutter/views/submenu/listmahasiswascreen.dart';
+import 'package:pembekalan_flutter/views/submenu/locationservicesscreen.dart';
+import 'package:pembekalan_flutter/views/submenu/mapservicescreen.dart';
 import 'package:pembekalan_flutter/views/submenu/parsingdatascreen.dart';
+import 'package:pembekalan_flutter/views/submenu/updatedatamahasiswascreen.dart';
 
 void main() {
   runApp(const MainApp());
@@ -39,6 +43,10 @@ class MainApp extends StatelessWidget {
         Routes.cameragaleryscreen: (context) => CameraGaleryScreen(),
         Routes.listmahasiswascreen: (context) => ListMahasiswaScreen(),
         Routes.inputdatamahasiswascreen: (context) => InputDataMahasiswaScreen(),
+        Routes.detailmahasiswascreen: (context) => DetailMahasiswaScreen(),
+        Routes.updatedatamahasiswascreen: (context) => UpdateDataMahasiswaScreen(),
+        Routes.locationservicesscreen: (context) => LocationServicesScreen(),
+        Routes.mapservicescreen: (context) => MapServiceScreen(),
         
       },
     );
