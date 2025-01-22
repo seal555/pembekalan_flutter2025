@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_compass/flutter_compass.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:pembekalan_flutter/customs/custom_compass_painter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MapServiceScreen extends StatefulWidget {
@@ -31,7 +33,7 @@ class _MapServiceScreenState extends State<MapServiceScreen> {
             : throw 'Could not launch $url';
       });
 
-    // referensi custom icon marker https://www.youtube.com/watch?v=RVtjQupsa9I  
+  // referensi custom icon marker https://www.youtube.com/watch?v=RVtjQupsa9I
 
   // koordinat XA Jogja
   CameraPosition xaCoordinate = CameraPosition(
@@ -42,6 +44,18 @@ class _MapServiceScreenState extends State<MapServiceScreen> {
 
   // semua marker yg akan ditampilkan ditampung di sini
   List<Marker> markers = <Marker>[];
+
+  // menampung layout compass
+  OverlayEntry? overlayEntry;
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    print('On Dispose...........');
+    overlayEntry!.remove();
+    print('Remove Compass...........');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,5 +107,103 @@ class _MapServiceScreenState extends State<MapServiceScreen> {
       //tambahkan marker
       markers.add(xaMarker);
     });
+
+    // fitur extra, tambahkan compass
+    showCompass(context);
+  }
+
+  void showCompass(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
+    overlayEntry = OverlayEntry(
+        builder: (context) => Positioned(
+            top: size.height * 0.6,
+            left: size.width * 0.2,
+            child: Material(
+              color: Colors.transparent,
+              child: Container(
+                height: size.height * 0.3,
+                width: size.width * 0.6,
+                color: Colors.transparent,
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Scaffold(
+                    backgroundColor: Colors.transparent,
+                    body: StreamBuilder(
+                        stream: FlutterCompass.events,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasError) {
+                            return Text(
+                                'Error reading heading: ${snapshot.error}');
+                          }
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+
+                          // tangkap bacaan arah mata angin
+                          double? direction = snapshot.data!.heading;
+
+                          if (direction == null) {
+                            return const Center(
+                              child: Text('Device does not have sensors'),
+                            );
+                          } else {
+                            return SizedBox(
+                              child: Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  CustomPaint(
+                                    size: size,
+                                    painter:
+                                        CustomCompassPainter(angle: direction),
+                                  ),
+                                  Text(
+                                    buildArahMataAngin(direction),
+                                    style: TextStyle(
+                                        fontSize: 70, color: Colors.grey[700]!),
+                                  ),
+                                  Align(
+                                    alignment: Alignment.bottomCenter,
+                                    child: Text(
+                                      "${direction.toStringAsFixed(5)}",
+                                      style: TextStyle(
+                                          color: Colors.redAccent,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            );
+                          }
+                        }),
+                  ),
+                ),
+              ),
+            )));
+
+    // untuk menampilkan layout compass
+    Overlay.of(context).insert(overlayEntry!);
+  }
+
+  String buildArahMataAngin(double direction) {
+
+    //direction = direction.abs();
+
+    if (direction >= 0 && direction <= 45 ||
+        direction >= 315 && direction <= 360) {
+      return 'N'; //utara
+    } else if (direction > 45 && direction <= 135) {
+      return 'E'; //timur
+    } else if (direction > 135 && direction < 225) {
+      return 'S'; //selatan
+    } else if (direction > 225 && direction <= 315) {
+      return 'W'; //barat
+    } else {
+      return "-";
+    }
   }
 }
