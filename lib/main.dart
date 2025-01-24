@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pembekalan_flutter/translations/codegen_loader.g.dart';
 import 'package:pembekalan_flutter/utilities/routes.dart';
 import 'package:pembekalan_flutter/views/dashboardscreen.dart';
 import 'package:pembekalan_flutter/views/loginscreen.dart';
@@ -17,8 +19,25 @@ import 'package:pembekalan_flutter/views/submenu/ocrscreen.dart';
 import 'package:pembekalan_flutter/views/submenu/parsingdatascreen.dart';
 import 'package:pembekalan_flutter/views/submenu/updatedatamahasiswascreen.dart';
 
-void main() {
-  runApp(const MainApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+
+  //runApp(const MainApp());
+
+  runApp(EasyLocalization(
+    // run this command on terminal to generate localizations assets
+    // to add new text, please use i18n manager (open source tools)
+    // flutter pub run easy_localization:generate -S "assets/translations" -O "lib/translations"
+    // flutter pub run easy_localization:generate -S "assets/translations" -O "lib/translations" -o "locale_keys.g.dart" -f keys
+
+    child: MainApp(),
+    supportedLocales: [Locale('en'), Locale('id')],
+    path: 'assets/translations',
+    startLocale: Locale('id'), // default locale language (https://www.npmjs.com/package/i18n-iso-countries)
+    fallbackLocale: Locale('id'), //
+    assetLoader: CodegenLoader(),
+  ));
 }
 
 class MainApp extends StatelessWidget {
@@ -32,6 +51,9 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false, // untuk menghilangkan banner debug
       title: 'Pembekalan Flutter 2025',
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
       home: SplashScreen(),
       routes: {
         Routes.splashscreen: (context) => SplashScreen(),
@@ -43,9 +65,11 @@ class MainApp extends StatelessWidget {
         Routes.detailimagescreen: (context) => DetailImageScreen(),
         Routes.cameragaleryscreen: (context) => CameraGaleryScreen(),
         Routes.listmahasiswascreen: (context) => ListMahasiswaScreen(),
-        Routes.inputdatamahasiswascreen: (context) => InputDataMahasiswaScreen(),
+        Routes.inputdatamahasiswascreen: (context) =>
+            InputDataMahasiswaScreen(),
         Routes.detailmahasiswascreen: (context) => DetailMahasiswaScreen(),
-        Routes.updatedatamahasiswascreen: (context) => UpdateDataMahasiswaScreen(),
+        Routes.updatedatamahasiswascreen: (context) =>
+            UpdateDataMahasiswaScreen(),
         Routes.locationservicesscreen: (context) => LocationServicesScreen(),
         Routes.mapservicescreen: (context) => MapServiceScreen(),
         Routes.ocrscreen: (context) => OCRScreen(),

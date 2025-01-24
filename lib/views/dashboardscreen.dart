@@ -1,5 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pembekalan_flutter/customs/custom_confirmationdialog.dart';
+import 'package:pembekalan_flutter/customs/custom_language_chooser.dart';
+import 'package:pembekalan_flutter/main.dart';
+import 'package:pembekalan_flutter/translations/locale_keys.g.dart';
 import 'package:pembekalan_flutter/utilities/routes.dart';
 import 'package:pembekalan_flutter/utilities/sharedpreferences.dart';
 
@@ -37,7 +41,7 @@ class DashboardScreenState extends State<StatefulWidget> {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title: Text('Dashboard Menu'),
+        title: Text(LocaleKeys.dashboard_menu.tr()),
         titleTextStyle: TextStyle(
             color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
         backgroundColor: Colors.blueAccent,
@@ -94,7 +98,7 @@ class DashboardScreenState extends State<StatefulWidget> {
                       Icons.home,
                       color: Colors.white,
                     ),
-                    title: Text('Dashboard Menu'),
+                    title: Text(LocaleKeys.dashboard_menu.tr()),
                     titleTextStyle:
                         TextStyle(color: Colors.white, fontSize: 16),
                     onTap: () {
@@ -110,7 +114,7 @@ class DashboardScreenState extends State<StatefulWidget> {
                       Icons.admin_panel_settings,
                       color: Colors.white,
                     ),
-                    title: Text('Adminstrator'),
+                    title: Text(LocaleKeys.administrator.tr()),
                     titleTextStyle:
                         TextStyle(color: Colors.white, fontSize: 16),
                     onTap: () {
@@ -125,7 +129,7 @@ class DashboardScreenState extends State<StatefulWidget> {
                     borderRadius: BorderRadius.circular(10),
                     child: ExpansionTile(
                       title: Text(
-                        'Settings',
+                        LocaleKeys.settings.tr(),
                         style: TextStyle(color: Colors.white, fontSize: 16),
                       ),
                       leading: Icon(
@@ -138,21 +142,25 @@ class DashboardScreenState extends State<StatefulWidget> {
                       backgroundColor: Colors.grey,
                       collapsedBackgroundColor: Colors.amberAccent,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.arrow_right,
-                              color: Colors.white,
-                            ),
-                            Text(
-                              'Pengaturan Bahasa',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 16),
-                            )
-                          ],
-                        ),
+                        InkWell(
+                            onTap: () {
+                              pilihBahasa();
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.arrow_right,
+                                  color: Colors.white,
+                                ),
+                                Text(
+                                  LocaleKeys.language_setting.tr(),
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 16),
+                                )
+                              ],
+                            )),
                         InkWell(
                           onTap: () {
                             // tentukan aksinya
@@ -166,7 +174,7 @@ class DashboardScreenState extends State<StatefulWidget> {
                                 color: Colors.white,
                               ),
                               Text(
-                                'Pengaturan Theme',
+                                LocaleKeys.theme_settings.tr(),
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 16),
                               )
@@ -182,7 +190,7 @@ class DashboardScreenState extends State<StatefulWidget> {
                               color: Colors.white,
                             ),
                             Text(
-                              'T&C',
+                              LocaleKeys.tnc.tr(),
                               style:
                                   TextStyle(color: Colors.white, fontSize: 16),
                             )
@@ -241,6 +249,25 @@ class DashboardScreenState extends State<StatefulWidget> {
     // tampilkan dialog konfirmasi
     showDialog(context: _context, builder: (_) => confirmationDialog);
   }
+
+  void pilihBahasa() async {
+    showDialog(
+        context: context,
+        builder: (context) => customLanguageChooser(
+              onID: () async {
+                //Bahasa Indonesia
+                Navigator.of(context).pop();
+                context.setLocale(Locale('id')); // https://www.npmjs.com/package/i18n-iso-countries
+                print('Bahasa dipilih : ${context.locale.toString()}');
+              },
+              onEN: () async {
+                //Bahasa Inggris
+                Navigator.of(context).pop();
+                context.setLocale(Locale('en')); // https://www.npmjs.com/package/i18n-iso-countries
+                print('Bahasa dipilih : ${context.locale.toString()}');
+              },
+            ));
+  }
 }
 
 class DashboardScreenLayout extends StatefulWidget {
@@ -273,7 +300,7 @@ class DashboardScreenLayoutState extends State<StatefulWidget> {
                 )
               ],
             ),
-            onTap: (){
+            onTap: () {
               // pindah ke screen parsing
               Navigator.pushNamed(context, Routes.parsingdatascreen);
             },
@@ -297,7 +324,7 @@ class DashboardScreenLayoutState extends State<StatefulWidget> {
                 )
               ],
             ),
-            onTap: (){
+            onTap: () {
               // pindah ke screen imaging
               Navigator.pushNamed(context, Routes.imagingsliderscreen);
             },
@@ -321,7 +348,7 @@ class DashboardScreenLayoutState extends State<StatefulWidget> {
                 )
               ],
             ),
-            onTap: (){
+            onTap: () {
               // pindah ke screen camera & galery
               Navigator.pushNamed(context, Routes.cameragaleryscreen);
             },
@@ -345,7 +372,7 @@ class DashboardScreenLayoutState extends State<StatefulWidget> {
                 )
               ],
             ),
-            onTap: (){
+            onTap: () {
               // pindah ke screen database
               Navigator.pushNamed(context, Routes.listmahasiswascreen);
             },
@@ -369,7 +396,7 @@ class DashboardScreenLayoutState extends State<StatefulWidget> {
                 )
               ],
             ),
-            onTap: (){
+            onTap: () {
               // pindah ke screen location services
               Navigator.pushNamed(context, Routes.locationservicesscreen);
             },
@@ -393,7 +420,7 @@ class DashboardScreenLayoutState extends State<StatefulWidget> {
                 )
               ],
             ),
-            onTap: (){
+            onTap: () {
               // pindah ke screen map services
               Navigator.pushNamed(context, Routes.mapservicescreen);
             },
@@ -417,7 +444,7 @@ class DashboardScreenLayoutState extends State<StatefulWidget> {
                 )
               ],
             ),
-            onTap: (){
+            onTap: () {
               // pindah ke screen OCR
               Navigator.pushNamed(context, Routes.ocrscreen);
             },
