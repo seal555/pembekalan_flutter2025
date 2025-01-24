@@ -13,4 +13,5 @@ class Routes{
   static const String updatedatamahasiswascreen = '/submenu/updatedatamahasiswascreen';
   static const String locationservicesscreen = '/submenu/locationservicesscreen';
   static const String mapservicescreen = '/submenu/mapservicesscreen';
+  static const String ocrscreen = '/submenu/ocrscreen';
 }

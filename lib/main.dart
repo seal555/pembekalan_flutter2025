@@ -13,6 +13,7 @@ import 'package:pembekalan_flutter/views/submenu/inputdatamahasiswascreen.dart';
 import 'package:pembekalan_flutter/views/submenu/listmahasiswascreen.dart';
 import 'package:pembekalan_flutter/views/submenu/locationservicesscreen.dart';
 import 'package:pembekalan_flutter/views/submenu/mapservicescreen.dart';
+import 'package:pembekalan_flutter/views/submenu/ocrscreen.dart';
 import 'package:pembekalan_flutter/views/submenu/parsingdatascreen.dart';
 import 'package:pembekalan_flutter/views/submenu/updatedatamahasiswascreen.dart';
 
@@ -47,7 +48,7 @@ class MainApp extends StatelessWidget {
         Routes.updatedatamahasiswascreen: (context) => UpdateDataMahasiswaScreen(),
         Routes.locationservicesscreen: (context) => LocationServicesScreen(),
         Routes.mapservicescreen: (context) => MapServiceScreen(),
-        
+        Routes.ocrscreen: (context) => OCRScreen(),
       },
     );
   }

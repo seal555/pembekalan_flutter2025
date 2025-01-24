@@ -13,7 +13,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
    
     <application
-        android:label="pembekalan_flutter"
+        android:label="Flutter 2025"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
@@ -47,6 +47,9 @@
         <!-- untuk enable Google Maps -->
         <meta-data android:name="com.google.android.geo.API_KEY"
                android:value="AIzaSyBvN1qQIbs4eEniGOq6VCDAi1jp9-IQzMQ"/>
+
+        <!-- untuk fixing issue implement OCR -->
+        <meta-data android:name="com.google.mlkit.vision.DEPENDENCIES" android:value="ocr"/>       
     </application>
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and

@@ -398,6 +398,30 @@ class DashboardScreenLayoutState extends State<StatefulWidget> {
               Navigator.pushNamed(context, Routes.mapservicescreen);
             },
           ),
+        ),
+        Card(
+          color: Colors.redAccent,
+          child: InkWell(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.scanner,
+                  color: Colors.white,
+                  size: 100,
+                ),
+                Text(
+                  'OCR',
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                )
+              ],
+            ),
+            onTap: (){
+              // pindah ke screen OCR
+              Navigator.pushNamed(context, Routes.ocrscreen);
+            },
+          ),
         )
       ],
     );

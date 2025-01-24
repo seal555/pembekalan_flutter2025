@@ -15,7 +15,8 @@ dependencies:
 
   #untuk date time formatter
   #https://pub.dev/packages/intl
-  intl: ^0.20.1
+  intl: ">=0.17.0 <=0.20.1" 
+  #0.20.1 compatibility issue dng easy_localization
 
   #untuk http connection
   #https://pub.dev/packages/http
@@ -63,6 +64,14 @@ dependencies:
   #https://pub.dev/packages/flutter_compass
   flutter_compass: '^0.8.1'
 
+  #OCR
+  #https://pub.dev/packages/google_mlkit_text_recognition
+  google_mlkit_text_recognition: ^0.14.0
+
+  #implementasi multi language
+  #https://pub.dev/packages/easy_localization/install
+  easy_localization: ^3.0.7
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -74,9 +83,13 @@ flutter:
   #untuk mendaftarkan berbagai asset image yang akan digunakan
   assets:
   - assets/images/logo_xa.png
+  #untuk mendaftarkan assets translations/multi language
+  - assets/translations/     
 
   #untuk mendaftarkan custom font yang akan digunakan
   fonts:
     - family: BiomeRegular
       fonts:
         - asset: assets/fonts/biome_regular.ttf
+
+   
